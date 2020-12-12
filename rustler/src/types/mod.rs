@@ -4,7 +4,6 @@ use crate::{Env, Error, NifResult, Term};
 pub mod atom;
 pub use crate::types::atom::Atom;
 
-#[doc(hidden)]
 pub mod binary;
 pub use crate::types::binary::{Binary, OwnedBinary};
 
@@ -135,7 +134,7 @@ where
     fn decode(term: Term<'a>) -> NifResult<Self> {
         let size = term.map_size()?;
 
-        let it = MapIterator::new(term).ok_or_else(|| Error::BadArg)?;
+        let it = MapIterator::new(term).ok_or(Error::BadArg)?;
 
         let mut map = std::collections::HashMap::with_capacity(size);
 
